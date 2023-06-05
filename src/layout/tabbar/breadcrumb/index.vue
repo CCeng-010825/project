@@ -1,6 +1,6 @@
 <template>
   <el-icon @click="change" style="margin-right: 10px">
-    <component :is="flag ? 'Fold' : 'Expand'"></component>
+    <component :is="layoutSettingStore.fold ? 'Fold' : 'Expand'"></component>
   </el-icon>
 
   <el-breadcrumb separator-icon="ArrowRight">
@@ -21,14 +21,16 @@
 </template>
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-// import { ArrowRight } from '@element-plus/icons-vue'
-import userStore from '@/store/modules/user'
+import useLayoutSettingStore from '@/store/modules/setting'
 import { reactive, toRefs, onBeforeMount, onMounted, ref } from 'vue'
 // let useUserStore = userStore()
-let flag = ref(false)
+// let flag = ref(false)?
+let layoutSettingStore = useLayoutSettingStore()
 let $route = useRoute()
 const change = () => {
-  flag.value = !flag.value
+  // flag.value = !flag.value
+  // console.log(layoutSettingStore)
+  layoutSettingStore.fold = !layoutSettingStore.fold
 }
 // console.log($route.matched)
 // console.log(useUserStore)

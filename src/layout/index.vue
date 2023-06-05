@@ -1,6 +1,6 @@
 <template>
   <div class="layout_container">
-    <div class="layout_slider">
+    <div class="layout_slider" :class="layoutSettingStore.fold ? 'fold' : ''">
       <Logo></Logo>
       <el-scrollbar class="scrollbar">
         <el-menu
@@ -8,15 +8,16 @@
           background-color="#001529"
           text-color="white"
           active-text-color="yellowgreen"
+          :collapse="layoutSettingStore.fold ? true : false"
         >
           <Menu :menu-list="useUserStore.menuRoutes"></Menu>
         </el-menu>
       </el-scrollbar>
     </div>
-    <div class="layout_tabbar">
+    <div class="layout_tabbar" :class="layoutSettingStore.fold ? 'fold' : ''">
       <Tabbar></Tabbar>
     </div>
-    <div class="layout_main">
+    <div class="layout_main" :class="layoutSettingStore.fold ? 'fold' : ''">
       <Main></Main>
     </div>
   </div>
@@ -35,10 +36,12 @@ import Tabbar from './tabbar/index.vue'
 import { useRouter } from 'vue-router'
 import userStore from '@/store/modules/user.ts'
 import { ref } from 'vue'
+import useLayoutSettingStore from '@/store/modules/setting'
 // import useStore from 'element-plus/es/components/table/src/store/index.js'
 // console.log(useRouter)
 // console.log($route.path)
 let useUserStore = userStore()
+let layoutSettingStore = useLayoutSettingStore()
 // console.log(useUserStore)
 </script>
 
@@ -59,6 +62,9 @@ let useUserStore = userStore()
     .el-menu {
       border-right: none;
     }
+    &.fold {
+      width: $base-menu-min-width;
+    }
   }
   .layout_tabbar {
     position: fixed;
@@ -66,19 +72,27 @@ let useUserStore = userStore()
     width: calc(100% - $base-menu-width);
     left: $base-menu-width;
     height: $base-tabbar-height;
-    background-color: white;
+    // background-color: white;
     transition: all 0.3s;
+    &.fold {
+      width: calc(100% - $base-menu-min-width);
+      left: $base-menu-min-width;
+    }
   }
   .layout_main {
     position: absolute;
     top: $base-tabbar-height;
     left: $base-menu-width;
-    background-color: yellow;
+    // background-color: yellow;
     width: calc(100% - $base-menu-width);
     height: calc(100vh - $base-tabbar-height);
     padding: 20px;
     overflow: auto;
     transition: all 0.3s;
+    &.fold {
+      width: calc(100% - $base-menu-min-width);
+      left: $base-menu-min-width;
+    }
   }
 }
 </style>

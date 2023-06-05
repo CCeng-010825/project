@@ -8,7 +8,18 @@
 </template>
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue'
+import useLayoutSettingStore from '@/store/modules/setting'
 let flag = ref(true)
+let layoutSettingStore = useLayoutSettingStore()
+watch(
+  () => layoutSettingStore.refresh,
+  () => {
+    flag.value = false
+    nextTick(() => {
+      flag.value = true
+    })
+  },
+)
 </script>
 <script lang="ts">
 export default {

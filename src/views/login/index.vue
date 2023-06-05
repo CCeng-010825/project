@@ -11,15 +11,15 @@
         >
           <h1>Hello</h1>
           <h2>欢迎来到硅谷甄选</h2>
-          <el-form-item prop="userName">
+          <el-form-item prop="username">
             <el-input
-              v-model="loginForm.userName"
+              v-model="loginForm.username"
               :prefix-icon="User"
             ></el-input>
           </el-form-item>
-          <el-form-item prop="passWord">
+          <el-form-item prop="password">
             <el-input
-              v-model="loginForm.passWord"
+              v-model="loginForm.password"
               type="password"
               show-password
               :prefix-icon="Lock"
@@ -47,11 +47,13 @@ import { reactive, toRefs, ref, onBeforeMount, onMounted } from 'vue'
 import { ElNotification } from 'element-plus'
 import { useRouter, useRoute } from 'vue-router'
 import getTime from '@/utils/time'
+import { userLogin } from '@/api/user'
 // import { login } from 'mock/user'
 import axios from 'axios'
 let loginForms = ref()
 console.log(loginForms)
-let loginForm = reactive({ userName: '', passWord: '' })
+let $router = useRouter()
+let loginForm = reactive({ username: 'admin', password: 'atguigu123' })
 let loading = ref(false)
 const validatorUserName = (rule: any, value: any, callback: any) => {
   if (value.length >= 5) {
@@ -68,8 +70,8 @@ const validatorPassWord = (rule: any, value: any, callback: any) => {
   }
 }
 const rules = {
-  userName: [{ trigger: 'change', validator: validatorUserName }],
-  passWord: [{ trigger: 'change', validator: validatorPassWord }],
+  username: [{ trigger: 'change', validator: validatorUserName }],
+  password: [{ trigger: 'change', validator: validatorPassWord }],
 }
 const login = async () => {
   //   console.log('123')
@@ -83,11 +85,21 @@ const login = async () => {
   //       console.log(res)
   //     })
   await loginForms.value.validate()
-  loading.value = true
-  ElNotification({
-    type: 'success',
-    message: '登陆成功',
+  const data = {
+    username: loginForm.username,
+    password: loginForm.password,
+  }
+  userLogin(data).then((res) => {
+    // console.log(res)
+    $router.push('/home')
   })
+  // let res = await userLogin(data)
+  // console.log(res)
+  // loading.value = true
+  // ElNotification({
+  //   type: 'success',
+  //   message: '登陆成功',
+  // })
 }
 </script>
 <style lang="scss" scoped>

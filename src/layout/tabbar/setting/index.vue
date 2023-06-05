@@ -26,7 +26,7 @@
       </el-form-item>
     </el-form>
     <template #reference>
-      <el-button size="small" icon="Setting" circle @click="fullScreen" />
+      <el-button size="small" icon="Setting" circle />
     </template>
   </el-popover>
   <el-avatar
@@ -49,6 +49,7 @@
   </el-dropdown>
 </template>
 <script setup lang="ts">
+import useLayoutSettingStore from '@/store/modules/setting'
 import { ref } from 'vue'
 const color = ref('rgba(255, 69, 0, 0.68)')
 const predefineColors = ref([
@@ -68,17 +69,34 @@ const predefineColors = ref([
   '#c7158577',
 ])
 let dark = ref<boolean>(false)
+let layoutSettingStore = useLayoutSettingStore()
 const updateRefsh = () => {
-  console.log('ii')
+  // console.log('ii')
+  // console.log(layoutSettingStore.refresh)
+  layoutSettingStore.refresh = !layoutSettingStore.refresh
 }
 const fullScreen = () => {
-  console.log('pp')
+  // console.log('pp')
+  // console.log(document.fullscreenElement)
+  let full = document.fullscreenElement
+  if (!full) {
+    document.documentElement.requestFullscreen()
+  } else {
+    document.exitFullscreen()
+  }
 }
 const setColor = () => {
-  console.log('color')
+  // console.log('color')
+  // console.log(document.documentElement)
+  let html = document.documentElement
+  // console.log(color.value)
+  html.style.setProperty('--el-color-primary', color.value)
 }
 const changeDark = () => {
-  console.log('dark')
+  // console.log('dark')
+  let html = document.documentElement
+  // console.log(dark.value)
+  dark.value ? (html.className = 'dark') : (html.className = '')
 }
 const logout = () => {
   console.log('out')
