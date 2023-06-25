@@ -43,16 +43,16 @@
 </template>
 <script setup lang="ts">
 import { User, Lock } from '@element-plus/icons-vue'
-import { reactive, toRefs, ref, onBeforeMount, onMounted } from 'vue'
+import { reactive, ref } from 'vue'
 import { ElNotification } from 'element-plus'
 import { useRouter, useRoute } from 'vue-router'
-import getTime from '@/utils/time'
-import { userLogin } from '@/api/user'
-// import { login } from 'mock/user'
-import axios from 'axios'
+import { getTime } from '@/utils/time'
+import useUserStore from '@/store/modules/user'
+let userStore = useUserStore()
 let loginForms = ref()
 console.log(loginForms)
 let $router = useRouter()
+let $route = useRoute()
 let loginForm = reactive({ username: 'admin', password: 'atguigu123' })
 let loading = ref(false)
 const validatorUserName = (rule: any, value: any, callback: any) => {
@@ -74,32 +74,27 @@ const rules = {
   password: [{ trigger: 'change', validator: validatorPassWord }],
 }
 const login = async () => {
-  //   console.log('123')
-  //   console.log(login)
-  //   axios
-  //     .post('/api/user/login', {
-  //       username: 'admin',
-  //       password: '111111',
-  //     })
-  //     .then((res) => {
-  //       console.log(res)
-  //     })
   await loginForms.value.validate()
-  const data = {
-    username: loginForm.username,
-    password: loginForm.password,
+  //加载效果:开始加载
+  loading.value = true
+  try {
+    await userStore.reqLogin(loginForm)
+    let redirect: any = $route.query.redirect
+    $router.push({ path: redirect || '/' })
+    // $router.push('/')
+    ElNotification({
+      type: 'success',
+      message: '欢迎回来',
+      title: `HI,${getTime()}好`,
+    })
+    loading.value = false
+  } catch (error) {
+    loading.value = false
+    ElNotification({
+      type: 'error',
+      message: (error as Error).message,
+    })
   }
-  userLogin(data).then((res) => {
-    // console.log(res)
-    $router.push('/home')
-  })
-  // let res = await userLogin(data)
-  // console.log(res)
-  // loading.value = true
-  // ElNotification({
-  //   type: 'success',
-  //   message: '登陆成功',
-  // })
 }
 </script>
 <style lang="scss" scoped>

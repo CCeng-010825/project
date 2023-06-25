@@ -29,14 +29,18 @@
       <el-button size="small" icon="Setting" circle />
     </template>
   </el-popover>
-  <el-avatar
+  <!-- <el-avatar
     icon="UserFilled"
     size="small"
     style="margin-left: 10px"
-  ></el-avatar>
+  ></el-avatar> -->
+  <img
+    :src="userStore.avatar"
+    style="width: 24px; height: 24px; margin: 0px 10px; border-radius: 50%"
+  />
   <el-dropdown style="margin-left: 10px">
     <span class="el-dropdown-link">
-      admin
+      {{ userStore.username }}
       <el-icon class="el-icon--right">
         <arrow-down />
       </el-icon>
@@ -50,6 +54,8 @@
 </template>
 <script setup lang="ts">
 import useLayoutSettingStore from '@/store/modules/setting'
+import useUserStore from '@/store/modules/user'
+import { useRouter, useRoute } from 'vue-router'
 import { ref } from 'vue'
 const color = ref('rgba(255, 69, 0, 0.68)')
 const predefineColors = ref([
@@ -70,6 +76,10 @@ const predefineColors = ref([
 ])
 let dark = ref<boolean>(false)
 let layoutSettingStore = useLayoutSettingStore()
+let userStore = useUserStore()
+let $router = useRouter()
+let $route = useRoute()
+// const username = ref('')
 const updateRefsh = () => {
   // console.log('ii')
   // console.log(layoutSettingStore.refresh)
@@ -98,8 +108,10 @@ const changeDark = () => {
   // console.log(dark.value)
   dark.value ? (html.className = 'dark') : (html.className = '')
 }
-const logout = () => {
-  console.log('out')
+const logout = async () => {
+  // console.log('out')
+  await userStore.reqLogout()
+  $router.push({ path: '/login', query: { redirect: $route.path } })
 }
 </script>
 <style lang="scss" scoped></style>

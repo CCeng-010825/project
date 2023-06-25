@@ -13,14 +13,14 @@ import pinia from './store/index'
 import axios from 'axios'
 import './permission.ts'
 const app = createApp(App)
-axios({
-  url: '/api/user/login',
-  method: 'post',
-  data: {
-    username: 'admin',
-    password: '111111',
-  },
-})
+// axios({
+//   url: '/api/user/login',
+//   method: 'post',
+//   data: {
+//     username: 'admin',
+//     password: '111111',
+//   },
+// })
 
 // app.use(axios)
 app.use(router)
