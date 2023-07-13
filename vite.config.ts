@@ -35,10 +35,15 @@ export default defineConfig(({ command, mode }) => {
     server: {
       proxy: {
         // import.meta.env.VITE_APP_BASE_API
-        [env.VITE_APP_BASE_API]: {
-          target: env.VITE_SERVE,
+        // [env.VITE_APP_BASE_API]: {
+        //   // port: 8080,
+        //   target: env.VITE_SERVE,
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/api/, ''),
+        // },
+        '/vacation': {
+          target: 'http://172.16.69.60:8080',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ''),
         },
       },
     },

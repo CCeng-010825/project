@@ -22,11 +22,11 @@ router.beforeEach(async (to: any, from: any, next: any) => {
       next()
     } else {
       try {
-        await userStore.reqUserInfo()
+        // await userStore.reqUserInfo()
         next()
       } catch (error) {
         // token过期或者手动修改token,用户退出登录，跳转到login页面
-        await userStore.reqLogout()
+        // await userStore.reqLogout()
         next({ path: '/login', query: { redirect: to.path } })
       }
     }
