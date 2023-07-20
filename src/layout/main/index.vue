@@ -1,10 +1,11 @@
 <template>
-  <div></div>
-  <router-view v-slot="{ Component }">
-    <transition name="fade">
-      <component :is="Component" v-if="flag"></component>
-    </transition>
-  </router-view>
+  <div>
+    <router-view v-slot="{ Component }">
+      <transition name="fade">
+        <component :is="Component" v-if="flag"></component>
+      </transition>
+    </router-view>
+  </div>
 </template>
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue'

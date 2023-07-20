@@ -41,7 +41,7 @@ export default {
     submit() {
       let _this = this
       axios
-        .post('/vacation', this.afl)
+        .post('/vacation/askForLeave', this.afl)
         .then(function (response) {
           if (response.data.status == 200) {
             //提交成功
