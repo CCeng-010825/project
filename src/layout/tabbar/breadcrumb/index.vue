@@ -11,7 +11,7 @@
       :to="item.path"
     >
       <el-icon>
-        <component :is="item.meta.icon"></component>
+        <component :is="item.meta.icon" v-if="item.meta.icon"></component>
       </el-icon>
       <span>{{ item.meta.title }}</span>
     </el-breadcrumb-item>
