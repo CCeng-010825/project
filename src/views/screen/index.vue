@@ -38,22 +38,21 @@ import Line from './components/line/index.vue'
 import Rank from './components/rank/index.vue'
 import Year from './components/year/index.vue'
 import Counter from './components/couter/index.vue'
-// let screen = ref()
-// onMounted(() => {
-//   screen.value.style.transform = `scale(${getScale()}) translate(-50%,-50%)`
-// })
-// //定义大屏缩放比例
-// function getScale(w = 1920, h = 1080) {
-//   const ww = window.innerWidth / w
-//   const wh = window.innerHeight / h
-//   return ww < wh ? ww : wh
-// }
-// //监听视口变化
-// window.onresize = () => {
-//   screen.value.style.transform = `scale(${getScale()}) translate(-50%,-50%)`
-// }
+import { ref, onMounted } from 'vue'
+let screen = ref()
+onMounted(() => {
+  // console.log(screen.value.style.transform)
+  screen.value.style.transform = `scale(${getScale()}) translate(-50%,-50%)`
+})
+function getScale(w = 1920, h = 1080) {
+  const ww = window.innerWidth / w
+  const wh = window.innerHeight / h
+  return ww < wh ? ww : wh
+  // ww<wh，即宽度变窄或者高度变高，宽度变窄，上下有空白，此时赢选择ww的值    ww>wh宽度变宽或者高度变低，此时左右有空白
+}
 window.onresize = () => {
-  console.log('resize')
+  screen.value.style.transform = `scale(${getScale()}) translate(-50%,-50%)`
+  // console.log('resize')
 }
 </script>
 <style lang="scss" scoped>
@@ -63,12 +62,12 @@ window.onresize = () => {
   background: url('./images/bg.png') no-repeat;
   background-size: cover;
   .screen {
-    // position: fixed;
-    // width: 1920px;
-    // height: 1080px;
-    // left: 50%;
-    // top: 50%;
-    // transform-origin: left top;
+    position: fixed;
+    width: 1920px;
+    height: 1080px;
+    left: 50%;
+    top: 50%;
+    transform-origin: left top;
     .header {
       width: 100%;
       height: 40px;
@@ -78,7 +77,7 @@ window.onresize = () => {
       .left {
         flex: 1;
         display: flex;
-        // height: 1040px;
+        height: 1040px;
         flex-direction: column;
         .tourist {
           flex: 1.2;

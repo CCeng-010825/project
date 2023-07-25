@@ -22,7 +22,14 @@
       </el-form>
     </el-card>
     <el-card style="margin: 10px 0px">
-      <el-button type="primary" size="default" icon="Plus">添加职位</el-button>
+      <el-button
+        type="primary"
+        size="default"
+        icon="Plus"
+        v-hhh="`btn.Role.add`"
+      >
+        添加职位
+      </el-button>
       <el-table :data="tableData" border style="margin: 10px 0px">
         <el-table-column
           label="#"

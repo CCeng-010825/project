@@ -34,7 +34,7 @@ export const constantRoute = [
       {
         path: '/home',
         component: () => import('@/views/home/index.vue'),
-        name: 'home',
+        // name: 'home',
         meta: {
           title: '首页',
           hidden: false,
@@ -115,6 +115,9 @@ export const constantRoute = [
   //     },
   //   ],
   // },
+]
+
+export const asyncRoutes = [
   {
     path: '/acl',
     component: () => import('@/layout/index.vue'),
@@ -160,7 +163,6 @@ export const constantRoute = [
     name: 'Product',
     meta: {
       title: '商品管理',
-      hidden: false,
       icon: 'Goods',
     },
     redirect: '/product/trademark',
@@ -204,3 +206,14 @@ export const constantRoute = [
     ],
   },
 ]
+
+export const anyRoutes = {
+  path: '/:pathMatch(.*)*',
+  redirect: '/404',
+  name: 'Any',
+  meta: {
+    title: '任意路由',
+    hidden: true,
+    icon: 'DataLine',
+  },
+}

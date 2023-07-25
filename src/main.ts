@@ -12,6 +12,7 @@ import router from './router/index'
 import pinia from './store/index'
 import axios from 'axios'
 import './permission.ts'
+import { isHasButton } from './directive/has.ts'
 const app = createApp(App)
 // axios({
 //   url: '/api/user/login',
@@ -23,6 +24,7 @@ const app = createApp(App)
 // })
 
 // app.use(axios)
+isHasButton(app)
 app.use(router)
 app.use(pinia)
 app.use(gloablComponent)

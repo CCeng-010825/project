@@ -27,7 +27,7 @@ let time = ref(moment().format('YYYY年MM月DD日 hh:mm:ss'))
 let timer = ref(0)
 onMounted(() => {
   timer.value = setInterval(() => {
-    time.value = ref(moment().format('YYYY年MM月DD日 hh:mm:ss'))
+    time.value = moment().format('YYYY年MM月DD日 hh:mm:ss')
   }, 1000)
   // console.log(timer.value)
 })
